@@ -17,12 +17,20 @@ for (i = 0; i < operator.length; i++) {
 
 equals.addEventListener("click", calculate);
 
-function addition(a, b) {
+function add(a, b) {
   return a + b;
 }
 
-function subtraction(a, b) {
+function subtr(a, b) {
   return a - b;
+}
+
+function multip(a, b) {
+  return a * b;
+}
+
+function div(a, b) {
+  return a / b;
 }
 
 function calculate() {
@@ -35,10 +43,16 @@ function calculate() {
 
   switch (operatorStr) {
     case "plus":
-      result = addition(firstNum, secondNum);
+      result = add(firstNum, secondNum);
       break;
     case "minus":
-      result = subtraction(firstNum, secondNum);
+      result = subtr(firstNum, secondNum);
+      break;
+    case "multip":
+      result = multip(firstNum, secondNum);
+      break;
+    case "div":
+      result = div(firstNum, secondNum);
       break;
   }
 
