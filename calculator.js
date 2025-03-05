@@ -56,7 +56,12 @@ function calculate() {
       break;
   }
 
-  return console.log("result = " + result);
+  console.log("result = " + result);
+  result = undefined;
+  firstNumberStr = "";
+  secondNumberStr = "";
+  operatorStr = "";
+  return;
 }
 
 function clickDigit(event) {
@@ -72,20 +77,6 @@ function clickDigit(event) {
         operatorStr,
     );
     return firstNumberStr;
-  } else if (result) {
-    result = undefined;
-    secondNumberStr = "";
-    operatorStr = "";
-    firstNumberStr = event.target.id;
-    console.clear();
-    console.log(
-      "1st num: " +
-        firstNumberStr +
-        "  2nd num: " +
-        secondNumberStr +
-        "  operator: " +
-        operatorStr,
-    );
   } else if (firstNumberStr !== "" && operatorStr !== "" && !result) {
     secondNumberStr += event.target.id;
     console.clear();
@@ -104,7 +95,7 @@ function clickDigit(event) {
 }
 
 function clickOperator(event) {
-  if (firstNumberStr !== "" && secondNumberStr === "" && !result) {
+  if (firstNumberStr !== "" && secondNumberStr === "" && operatorStr === "") {
     operatorStr = event.target.id;
     console.clear();
     console.log(
@@ -116,6 +107,32 @@ function clickOperator(event) {
         operatorStr,
     );
     return operatorStr;
+  } else if (event.target.id == "minus" && firstNumberStr === "") {
+    firstNumberStr += "-";
+    console.clear();
+    console.log(
+      "1st num: " +
+        firstNumberStr +
+        "  2nd num: " +
+        secondNumberStr +
+        "  operator: " +
+        operatorStr,
+    );
+  } else if (
+    event.target.id == "minus" &&
+    operatorStr !== "" &&
+    secondNumberStr === ""
+  ) {
+    secondNumberStr += "-";
+    console.clear();
+    console.log(
+      "1st num: " +
+        firstNumberStr +
+        "  2nd num: " +
+        secondNumberStr +
+        "  operator: " +
+        operatorStr,
+    );
   } else {
     return;
   }
