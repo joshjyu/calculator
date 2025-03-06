@@ -1,7 +1,8 @@
 const currentDigit = document.querySelectorAll(".digit");
 const operator = document.querySelectorAll(".operator");
-const equals = document.querySelector("#equals");
+const equals = document.querySelector("#eq");
 const clear = document.querySelector("#clear");
+let displayContent = document.querySelector(".display");
 
 let firstNumberStr = "";
 let secondNumberStr = "";
@@ -29,6 +30,7 @@ function clickDigit(event) {
         "  operator: " +
         operatorStr,
     );
+    displayInput();
     return firstNumberStr;
   } else if (firstNumberStr !== "" && operatorStr !== "" && !result) {
     secondNumberStr += event.target.id;
@@ -41,6 +43,7 @@ function clickDigit(event) {
         "  operator: " +
         operatorStr,
     );
+    displayInput();
     return secondNumberStr;
   } else {
     return;
@@ -59,8 +62,9 @@ function clickOperator(event) {
         "  operator: " +
         operatorStr,
     );
+    displayInput();
     return operatorStr;
-  } else if (event.target.id == "minus" && firstNumberStr === "") {
+  } else if (event.target.id == "-" && firstNumberStr === "") {
     firstNumberStr += "-";
     console.clear();
     console.log(
@@ -71,8 +75,10 @@ function clickOperator(event) {
         "  operator: " +
         operatorStr,
     );
+    displayInput();
+    return firstNumberStr;
   } else if (
-    event.target.id == "minus" &&
+    event.target.id == "-" &&
     operatorStr !== "" &&
     secondNumberStr === ""
   ) {
@@ -86,6 +92,8 @@ function clickOperator(event) {
         "  operator: " +
         operatorStr,
     );
+    displayInput();
+    return secondNumberStr;
   } else {
     return;
   }
@@ -105,6 +113,7 @@ function allClear() {
       "  operator: " +
       operatorStr,
   );
+  displayInput();
 }
 
 function add(a, b) {
@@ -132,24 +141,35 @@ function calculate() {
   const secondNum = parseFloat(secondNumberStr);
 
   switch (operatorStr) {
-    case "plus":
+    case "+":
       result = add(firstNum, secondNum);
       break;
-    case "minus":
+    case "-":
       result = subtr(firstNum, secondNum);
       break;
-    case "multip":
+    case "x":
       result = multip(firstNum, secondNum);
       break;
-    case "div":
+    case "/":
       result = div(firstNum, secondNum);
       break;
   }
 
+  displayResult();
   console.log("result = " + result);
   result = undefined;
   firstNumberStr = "";
   secondNumberStr = "";
   operatorStr = "";
   return;
+}
+
+function displayInput() {
+  displayContent.textContent =
+    firstNumberStr + " " + operatorStr + " " + secondNumberStr;
+  return displayContent;
+}
+
+function displayResult() {
+  displayContent.textContent = result;
 }
