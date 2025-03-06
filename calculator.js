@@ -21,28 +21,10 @@ clear.addEventListener("click", allClear);
 function clickDigit(event) {
   if (secondNumberStr === "" && operatorStr === "") {
     firstNumberStr += event.target.id;
-    console.clear();
-    console.log(
-      "1st num: " +
-        firstNumberStr +
-        "  2nd num: " +
-        secondNumberStr +
-        "  operator: " +
-        operatorStr,
-    );
     displayInput();
     return firstNumberStr;
   } else if (firstNumberStr !== "" && operatorStr !== "" && !result) {
     secondNumberStr += event.target.id;
-    console.clear();
-    console.log(
-      "1st num: " +
-        firstNumberStr +
-        "  2nd num: " +
-        secondNumberStr +
-        "  operator: " +
-        operatorStr,
-    );
     displayInput();
     return secondNumberStr;
   } else {
@@ -53,28 +35,10 @@ function clickDigit(event) {
 function clickOperator(event) {
   if (firstNumberStr !== "" && secondNumberStr === "" && operatorStr === "") {
     operatorStr = event.target.id;
-    console.clear();
-    console.log(
-      "1st num: " +
-        firstNumberStr +
-        "  2nd num: " +
-        secondNumberStr +
-        "  operator: " +
-        operatorStr,
-    );
     displayInput();
     return operatorStr;
   } else if (event.target.id == "-" && firstNumberStr === "") {
     firstNumberStr += "-";
-    console.clear();
-    console.log(
-      "1st num: " +
-        firstNumberStr +
-        "  2nd num: " +
-        secondNumberStr +
-        "  operator: " +
-        operatorStr,
-    );
     displayInput();
     return firstNumberStr;
   } else if (
@@ -83,15 +47,6 @@ function clickOperator(event) {
     secondNumberStr === ""
   ) {
     secondNumberStr += "-";
-    console.clear();
-    console.log(
-      "1st num: " +
-        firstNumberStr +
-        "  2nd num: " +
-        secondNumberStr +
-        "  operator: " +
-        operatorStr,
-    );
     displayInput();
     return secondNumberStr;
   } else {
@@ -104,15 +59,6 @@ function allClear() {
   secondNumberStr = "";
   operatorStr = "";
   result = undefined;
-  console.clear();
-  console.log(
-    "1st num: " +
-      firstNumberStr +
-      "  2nd num: " +
-      secondNumberStr +
-      "  operator: " +
-      operatorStr,
-  );
   displayInput();
 }
 
@@ -156,7 +102,6 @@ function calculate() {
   }
 
   displayResult();
-  console.log("result = " + result);
   result = undefined;
   firstNumberStr = "";
   secondNumberStr = "";

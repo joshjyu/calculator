@@ -8,4 +8,4 @@ This was made as an assignment for [The Odin Project](https://www.theodinproject
 
 ## Links
 
-...
+[Link to calculator](https://joshjyu.github.io/calculator/)
