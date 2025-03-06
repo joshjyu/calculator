@@ -11,3 +11,16 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    background: #dbcdff;
+    width: 25%;
+    height: 20%;
+    padding: 25px;
+    font-size: 20px;
+}
