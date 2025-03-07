@@ -2,6 +2,7 @@ const currentDigit = document.querySelectorAll(".digit");
 const operator = document.querySelectorAll(".operator");
 const equals = document.querySelector("#eq");
 const clear = document.querySelector("#clear");
+const backspaceButton = document.querySelector("#backspace");
 let displayContent = document.querySelector(".display");
 
 let firstNumberStr = "";
@@ -17,6 +18,7 @@ for (i = 0; i < operator.length; i++) {
 }
 equals.addEventListener("click", calculate);
 clear.addEventListener("click", allClear);
+backspaceButton.addEventListener("click", backspace);
 
 function clickDigit(event) {
   if (secondNumberStr === "" && operatorStr === "") {
@@ -62,20 +64,22 @@ function allClear() {
   displayInput();
 }
 
-function add(a, b) {
-  return a + b;
-}
-
-function subtr(a, b) {
-  return a - b;
-}
-
-function multip(a, b) {
-  return a * b;
-}
-
-function div(a, b) {
-  return a / b;
+function backspace() {
+  if (secondNumberStr.length > 0) {
+    secondNumberStr = secondNumberStr.slice(0, -1);
+    displayInput();
+    return secondNumberStr;
+  } else if (operatorStr.length > 0) {
+    operatorStr = "";
+    displayInput();
+    return operatorStr;
+  } else if (firstNumberStr.length > 0) {
+    firstNumberStr = firstNumberStr.slice(0, -1);
+    displayInput();
+    return firstNumberStr;
+  } else {
+    return;
+  }
 }
 
 function calculate() {
@@ -117,4 +121,20 @@ function displayInput() {
 
 function displayResult() {
   displayContent.textContent = result;
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtr(a, b) {
+  return a - b;
+}
+
+function multip(a, b) {
+  return a * b;
+}
+
+function div(a, b) {
+  return a / b;
 }
