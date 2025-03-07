@@ -3,6 +3,7 @@ const operator = document.querySelectorAll(".operator");
 const equals = document.querySelector("#eq");
 const clear = document.querySelector("#clear");
 const backspaceButton = document.querySelector("#backspace");
+const decimalButton = document.querySelector("#decimal");
 let displayContent = document.querySelector(".display");
 
 let firstNumberStr = "";
@@ -19,6 +20,7 @@ for (i = 0; i < operator.length; i++) {
 equals.addEventListener("click", calculate);
 clear.addEventListener("click", allClear);
 backspaceButton.addEventListener("click", backspace);
+decimalButton.addEventListener("click", clickDecimal);
 
 function clickDigit(event) {
   if (operatorStr.length == 0) {
@@ -57,6 +59,27 @@ function clickOperator(event) {
     return secondNumberStr;
   } else {
     return;
+  }
+}
+
+function clickDecimal() {
+  switch (operatorStr.length) {
+    case 0:
+      if (!firstNumberStr.includes(".")) {
+        firstNumberStr += ".";
+        displayInput();
+        break;
+      } else {
+        break;
+      }
+    case 1:
+      if (!secondNumberStr.includes(".")) {
+        secondNumberStr += ".";
+        displayInput();
+        break;
+      } else {
+        break;
+      }
   }
 }
 
