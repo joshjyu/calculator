@@ -21,11 +21,11 @@ clear.addEventListener("click", allClear);
 backspaceButton.addEventListener("click", backspace);
 
 function clickDigit(event) {
-  if (secondNumberStr === "" && operatorStr === "") {
+  if (operatorStr.length == 0) {
     firstNumberStr += event.target.id;
     displayInput();
     return firstNumberStr;
-  } else if (firstNumberStr !== "" && operatorStr !== "" && !result) {
+  } else if (operatorStr.length > 0 && !result) {
     secondNumberStr += event.target.id;
     displayInput();
     return secondNumberStr;
@@ -35,18 +35,22 @@ function clickDigit(event) {
 }
 
 function clickOperator(event) {
-  if (firstNumberStr !== "" && secondNumberStr === "" && operatorStr === "") {
+  if (
+    firstNumberStr.length > 0 &&
+    secondNumberStr.length == 0 &&
+    operatorStr.length == 0
+  ) {
     operatorStr = event.target.id;
     displayInput();
     return operatorStr;
-  } else if (event.target.id == "-" && firstNumberStr === "") {
+  } else if (event.target.id == "-" && firstNumberStr.length == 0) {
     firstNumberStr += "-";
     displayInput();
     return firstNumberStr;
   } else if (
     event.target.id == "-" &&
-    operatorStr !== "" &&
-    secondNumberStr === ""
+    operatorStr.length > 0 &&
+    secondNumberStr.length == 0
   ) {
     secondNumberStr += "-";
     displayInput();
@@ -121,6 +125,7 @@ function displayInput() {
 
 function displayResult() {
   displayContent.textContent = result;
+  return displayContent;
 }
 
 function add(a, b) {
