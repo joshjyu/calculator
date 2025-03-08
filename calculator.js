@@ -26,11 +26,13 @@ function clickDigit(event) {
   if (operatorStr.length == 0) {
     firstNumberStr += event.target.id;
     displayInput();
-    return firstNumberStr;
-  } else if (operatorStr.length > 0 && !result) {
+  } else if (operatorStr.length > 0) {
     secondNumberStr += event.target.id;
     displayInput();
-    return secondNumberStr;
+  } else if (result) {
+    allClear();
+    firstNumberStr += event.target.id;
+    displayInput();
   } else {
     return;
   }
@@ -38,17 +40,15 @@ function clickDigit(event) {
 
 function clickOperator(event) {
   if (
-    firstNumberStr.length > 0 &&
+    parseFloat(firstNumberStr) &&
     secondNumberStr.length == 0 &&
     operatorStr.length == 0
   ) {
     operatorStr = event.target.id;
     displayInput();
-    return operatorStr;
   } else if (event.target.id == "-" && firstNumberStr.length == 0) {
     firstNumberStr += "-";
     displayInput();
-    return firstNumberStr;
   } else if (
     event.target.id == "-" &&
     operatorStr.length > 0 &&
@@ -56,7 +56,12 @@ function clickOperator(event) {
   ) {
     secondNumberStr += "-";
     displayInput();
-    return secondNumberStr;
+  } else if (parseFloat(secondNumberStr)) {
+    calculate();
+    firstNumberStr = result;
+    secondNumberStr = "";
+    operatorStr = event.target.id;
+    displayInput();
   } else {
     return;
   }
@@ -95,22 +100,19 @@ function backspace() {
   if (secondNumberStr.length > 0) {
     secondNumberStr = secondNumberStr.slice(0, -1);
     displayInput();
-    return secondNumberStr;
   } else if (operatorStr.length > 0) {
     operatorStr = "";
     displayInput();
-    return operatorStr;
   } else if (firstNumberStr.length > 0) {
     firstNumberStr = firstNumberStr.slice(0, -1);
     displayInput();
-    return firstNumberStr;
   } else {
     return;
   }
 }
 
 function calculate() {
-  if (secondNumberStr === "") {
+  if (!parseFloat(secondNumberStr)) {
     return;
   }
 
@@ -133,11 +135,7 @@ function calculate() {
   }
 
   displayResult();
-  result = undefined;
-  firstNumberStr = "";
-  secondNumberStr = "";
-  operatorStr = "";
-  return;
+  return result;
 }
 
 function displayInput() {
