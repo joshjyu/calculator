@@ -40,7 +40,17 @@ function clickDigit(event) {
 
 function clickOperator(event) {
   if (
-    typeof parseFloat(firstNumberStr) === "number" &&
+    parseFloat(secondNumberStr) ||
+    parseFloat(secondNumberStr) == 0 ||
+    parseFloat(secondNumberStr) == -0
+  ) {
+    calculate();
+    operatorStr = event.target.id;
+    displayInput();
+  } else if (
+    (parseFloat(firstNumberStr) ||
+      parseFloat(firstNumberStr) == 0 ||
+      parseFloat(firstNumberStr) == -0) &&
     secondNumberStr.length == 0 &&
     operatorStr.length == 0
   ) {
@@ -55,12 +65,6 @@ function clickOperator(event) {
     secondNumberStr.length == 0
   ) {
     secondNumberStr += "-";
-    displayInput();
-  } else if (typeof parseFloat(secondNumberStr) === "number") {
-    calculate();
-    firstNumberStr = result;
-    secondNumberStr = "";
-    operatorStr = event.target.id;
     displayInput();
   } else {
     return;
@@ -112,7 +116,13 @@ function backspace() {
 }
 
 function calculate() {
-  if (!(typeof parseFloat(secondNumberStr) === "number")) {
+  if (
+    !(
+      parseFloat(secondNumberStr) ||
+      parseFloat(secondNumberStr) == 0 ||
+      parseFloat(secondNumberStr) == -0
+    )
+  ) {
     return;
   }
 
@@ -135,6 +145,10 @@ function calculate() {
   }
 
   displayResult();
+  firstNumberStr = result.toString();
+  secondNumberStr = "";
+  operatorStr = "";
+  result = undefined;
 }
 
 function displayInput() {
