@@ -9,7 +9,7 @@ let displayContent = document.querySelector(".display");
 let firstNumberStr = "";
 let secondNumberStr = "";
 let operatorStr = "";
-let result;
+let result = undefined;
 
 for (i = 0; i < currentDigit.length; i++) {
   currentDigit[i].addEventListener("click", clickDigit);
@@ -23,15 +23,15 @@ backspaceButton.addEventListener("click", backspace);
 decimalButton.addEventListener("click", clickDecimal);
 
 function clickDigit(event) {
-  if (operatorStr.length == 0) {
+  if (typeof result === "number") {
+    allClear();
+    firstNumberStr += event.target.id;
+    displayInput();
+  } else if (operatorStr.length == 0) {
     firstNumberStr += event.target.id;
     displayInput();
   } else if (operatorStr.length > 0) {
     secondNumberStr += event.target.id;
-    displayInput();
-  } else if (result) {
-    allClear();
-    firstNumberStr += event.target.id;
     displayInput();
   } else {
     return;
@@ -40,7 +40,7 @@ function clickDigit(event) {
 
 function clickOperator(event) {
   if (
-    parseFloat(firstNumberStr) &&
+    typeof parseFloat(firstNumberStr) === "number" &&
     secondNumberStr.length == 0 &&
     operatorStr.length == 0
   ) {
@@ -56,7 +56,7 @@ function clickOperator(event) {
   ) {
     secondNumberStr += "-";
     displayInput();
-  } else if (parseFloat(secondNumberStr)) {
+  } else if (typeof parseFloat(secondNumberStr) === "number") {
     calculate();
     firstNumberStr = result;
     secondNumberStr = "";
@@ -112,7 +112,7 @@ function backspace() {
 }
 
 function calculate() {
-  if (!parseFloat(secondNumberStr)) {
+  if (!(typeof parseFloat(secondNumberStr) === "number")) {
     return;
   }
 
@@ -135,7 +135,6 @@ function calculate() {
   }
 
   displayResult();
-  return result;
 }
 
 function displayInput() {
