@@ -6,17 +6,13 @@ const backspaceButton = document.querySelector("#backspace");
 const decimalButton = document.querySelector("#decimal");
 let displayContent = document.querySelector(".display");
 
-let firstNumberStr = "";
-let secondNumberStr = "";
+let firstOperandStr = "";
+let secondOperandStr = "";
 let operatorStr = "";
-let result = undefined;
+let result = null;
 
-for (i = 0; i < currentDigit.length; i++) {
-  currentDigit[i].addEventListener("click", clickDigit);
-}
-for (i = 0; i < operator.length; i++) {
-  operator[i].addEventListener("click", clickOperator);
-}
+currentDigit.forEach((button) => button.addEventListener("click", clickDigit));
+operator.forEach((button) => button.addEventListener("click", clickOperator));
 equals.addEventListener("click", calculate);
 clear.addEventListener("click", allClear);
 backspaceButton.addEventListener("click", backspace);
@@ -25,13 +21,13 @@ decimalButton.addEventListener("click", clickDecimal);
 function clickDigit(event) {
   if (typeof result === "number") {
     allClear();
-    firstNumberStr += event.target.id;
+    firstOperandStr += event.target.id;
     displayInput();
   } else if (operatorStr.length == 0) {
-    firstNumberStr += event.target.id;
+    firstOperandStr += event.target.id;
     displayInput();
   } else if (operatorStr.length > 0) {
-    secondNumberStr += event.target.id;
+    secondOperandStr += event.target.id;
     displayInput();
   } else {
     return;
@@ -40,31 +36,31 @@ function clickDigit(event) {
 
 function clickOperator(event) {
   if (
-    parseFloat(secondNumberStr) ||
-    parseFloat(secondNumberStr) == 0 ||
-    parseFloat(secondNumberStr) == -0
+    parseFloat(secondOperandStr) ||
+    parseFloat(secondOperandStr) == 0 ||
+    parseFloat(secondOperandStr) == -0
   ) {
     calculate();
     operatorStr = event.target.id;
     displayInput();
   } else if (
-    (parseFloat(firstNumberStr) ||
-      parseFloat(firstNumberStr) == 0 ||
-      parseFloat(firstNumberStr) == -0) &&
-    secondNumberStr.length == 0 &&
+    (parseFloat(firstOperandStr) ||
+      parseFloat(firstOperandStr) == 0 ||
+      parseFloat(firstOperandStr) == -0) &&
+    secondOperandStr.length == 0 &&
     operatorStr.length == 0
   ) {
     operatorStr = event.target.id;
     displayInput();
-  } else if (event.target.id == "-" && firstNumberStr.length == 0) {
-    firstNumberStr += "-";
+  } else if (event.target.id == "-" && firstOperandStr.length == 0) {
+    firstOperandStr += "-";
     displayInput();
   } else if (
     event.target.id == "-" &&
     operatorStr.length > 0 &&
-    secondNumberStr.length == 0
+    secondOperandStr.length == 0
   ) {
-    secondNumberStr += "-";
+    secondOperandStr += "-";
     displayInput();
   } else {
     return;
@@ -74,16 +70,16 @@ function clickOperator(event) {
 function clickDecimal() {
   switch (operatorStr.length) {
     case 0:
-      if (!firstNumberStr.includes(".")) {
-        firstNumberStr += ".";
+      if (!firstOperandStr.includes(".")) {
+        firstOperandStr += ".";
         displayInput();
         break;
       } else {
         break;
       }
     case 1:
-      if (!secondNumberStr.includes(".")) {
-        secondNumberStr += ".";
+      if (!secondOperandStr.includes(".")) {
+        secondOperandStr += ".";
         displayInput();
         break;
       } else {
@@ -93,22 +89,22 @@ function clickDecimal() {
 }
 
 function allClear() {
-  firstNumberStr = "";
-  secondNumberStr = "";
+  firstOperandStr = "";
+  secondOperandStr = "";
   operatorStr = "";
-  result = undefined;
+  result = null;
   displayInput();
 }
 
 function backspace() {
-  if (secondNumberStr.length > 0) {
-    secondNumberStr = secondNumberStr.slice(0, -1);
+  if (secondOperandStr.length > 0) {
+    secondOperandStr = secondOperandStr.slice(0, -1);
     displayInput();
   } else if (operatorStr.length > 0) {
     operatorStr = "";
     displayInput();
-  } else if (firstNumberStr.length > 0) {
-    firstNumberStr = firstNumberStr.slice(0, -1);
+  } else if (firstOperandStr.length > 0) {
+    firstOperandStr = firstOperandStr.slice(0, -1);
     displayInput();
   } else {
     return;
@@ -118,42 +114,42 @@ function backspace() {
 function calculate() {
   if (
     !(
-      parseFloat(secondNumberStr) ||
-      parseFloat(secondNumberStr) == 0 ||
-      parseFloat(secondNumberStr) == -0
+      parseFloat(secondOperandStr) ||
+      parseFloat(secondOperandStr) == 0 ||
+      parseFloat(secondOperandStr) == -0
     )
   ) {
     return;
   }
 
-  const firstNum = parseFloat(firstNumberStr);
-  const secondNum = parseFloat(secondNumberStr);
+  const firstOperand = parseFloat(firstOperandStr);
+  const secondOperand = parseFloat(secondOperandStr);
 
   switch (operatorStr) {
     case "+":
-      result = add(firstNum, secondNum);
+      result = add(firstOperand, secondOperand);
       break;
     case "-":
-      result = subtr(firstNum, secondNum);
+      result = subtr(firstOperand, secondOperand);
       break;
     case "x":
-      result = multip(firstNum, secondNum);
+      result = multip(firstOperand, secondOperand);
       break;
     case "/":
-      result = div(firstNum, secondNum);
+      result = div(firstOperand, secondOperand);
       break;
   }
 
   displayResult();
-  firstNumberStr = result.toString();
-  secondNumberStr = "";
+  firstOperandStr = result.toString();
+  secondOperandStr = "";
   operatorStr = "";
-  result = undefined;
+  result = null;
 }
 
 function displayInput() {
   displayContent.textContent =
-    firstNumberStr + " " + operatorStr + " " + secondNumberStr;
+    firstOperandStr + " " + operatorStr + " " + secondOperandStr;
   return displayContent;
 }
 
