@@ -14,6 +14,4 @@ This was made as an assignment for [The Odin Project](https://www.theodinproject
 
 - Add functionality to ( ) button
 - Add functionality to  % button
-- Round long decimals
-- Implement scientific notation when necessary
 - Add keyboard support

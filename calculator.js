@@ -154,7 +154,7 @@ function displayInput() {
 }
 
 function displayResult() {
-  displayContent.textContent = result;
+  displayContent.textContent = roundResult(result);
   return displayContent;
 }
 
@@ -172,4 +172,8 @@ function multip(a, b) {
 
 function div(a, b) {
   return a / b;
+}
+
+function roundResult(num) {
+  return Math.round(num * Math.pow(10, 9)) / Math.pow(10, 9);
 }
