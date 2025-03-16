@@ -11,8 +11,13 @@ let secondOperandStr = "";
 let operatorStr = "";
 let result = null;
 
-currentDigit.forEach((button) => button.addEventListener("click", clickDigit));
-operator.forEach((button) => button.addEventListener("click", clickOperator));
+window.addEventListener("keydown", kbInputHandler);
+currentDigit.forEach((button) =>
+  button.addEventListener("click", () => clickDigit(button.id)),
+);
+operator.forEach((button) =>
+  button.addEventListener("click", () => clickOperator(button.id)),
+);
 equals.addEventListener("click", calculate);
 clear.addEventListener("click", allClear);
 backspaceButton.addEventListener("click", backspace);
@@ -21,13 +26,13 @@ decimalButton.addEventListener("click", clickDecimal);
 function clickDigit(event) {
   if (typeof result === "number") {
     allClear();
-    firstOperandStr += event.target.id;
+    firstOperandStr += event;
     displayInput();
   } else if (operatorStr.length == 0) {
-    firstOperandStr += event.target.id;
+    firstOperandStr += event;
     displayInput();
   } else if (operatorStr.length > 0) {
-    secondOperandStr += event.target.id;
+    secondOperandStr += event;
     displayInput();
   } else {
     return;
@@ -41,7 +46,7 @@ function clickOperator(event) {
     parseFloat(secondOperandStr) == -0
   ) {
     calculate();
-    operatorStr = event.target.id;
+    operatorStr = event;
     displayInput();
   } else if (
     (parseFloat(firstOperandStr) ||
@@ -50,13 +55,13 @@ function clickOperator(event) {
     secondOperandStr.length == 0 &&
     operatorStr.length == 0
   ) {
-    operatorStr = event.target.id;
+    operatorStr = event;
     displayInput();
-  } else if (event.target.id == "-" && firstOperandStr.length == 0) {
+  } else if (event == "-" && firstOperandStr.length == 0) {
     firstOperandStr += "-";
     displayInput();
   } else if (
-    event.target.id == "-" &&
+    event == "-" &&
     operatorStr.length > 0 &&
     secondOperandStr.length == 0
   ) {
@@ -135,6 +140,9 @@ function calculate() {
     case "x":
       result = multip(firstOperand, secondOperand);
       break;
+    case "*":
+      result = multip(firstOperand, secondOperand);
+      break;
     case "/":
       result = div(firstOperand, secondOperand);
       break;
@@ -156,6 +164,18 @@ function displayInput() {
 function displayResult() {
   displayContent.textContent = roundResult(result);
   return displayContent;
+}
+
+function kbInputHandler(e) {
+  if (e.key >= 0 && e.key <= 9) clickDigit(e.key);
+  if (e.key === ".") clickDecimal();
+  if (e.key === "=" || e.key === "Enter") calculate();
+  if (e.key === "Backspace") backspace();
+  if (e.key === "Escape") allClear();
+  if (e.key === "+" || e.key === "-" || e.key === "*" || e.key === "x" || e.key === "/") {
+    e.preventDefault();
+    clickOperator(e.key);
+  }
 }
 
 function add(a, b) {

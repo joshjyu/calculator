@@ -14,4 +14,3 @@ This was made as an assignment for [The Odin Project](https://www.theodinproject
 
 - Add functionality to ( ) button
 - Add functionality to  % button
-- Add keyboard support
